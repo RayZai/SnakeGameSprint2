@@ -220,6 +220,7 @@ namespace Snake
 
 					for (int i = 0; i < 5; i++)
 					{
+						//the position is randomized from the second row to the the height of the console.
 						obstacles.Add(new Position(randomNumbersGenerator.Next(1, Console.WindowHeight),
 									randomNumbersGenerator.Next(0, Console.WindowWidth)));
 					}
@@ -237,7 +238,8 @@ namespace Snake
 					Queue<Position> snakeElements = new Queue<Position>();
 					for (int i = 0; i <= 3; i++)
 					{
-						snakeElements.Enqueue(new Position(0, i));
+						//The snake is created from the second row
+						snakeElements.Enqueue(new Position(1, i));
 					}
 
 					//Creating position for the food and displaying it
@@ -245,6 +247,7 @@ namespace Snake
 					Position food;
 					do
 					{
+						//the position is randomized from the second row to the the height of the console.
 						food = new Position(randomNumbersGenerator.Next(1, Console.WindowHeight),
 							randomNumbersGenerator.Next(0, Console.WindowWidth));
 					}
@@ -262,6 +265,7 @@ namespace Snake
 					{
 						do
 						{
+							//the position is randomized from the second row to the the height of the console.
 							posObject = new Position(randomNumbersGenerator.Next(1, Console.WindowHeight),
 								randomNumbersGenerator.Next(0, Console.WindowWidth));
 						}
@@ -332,7 +336,9 @@ namespace Snake
 						Position snakeNewHead = new Position(snakeHead.row + nextDirection.row,
 							snakeHead.col + nextDirection.col);
 
+						//When the snake reaches the sides, the snake will come out from the other side
 						if (snakeNewHead.col < 0) snakeNewHead.col = Console.WindowWidth - 1;
+						//prevents the snake from moving to the first row which the score is displayed
 						if (snakeNewHead.row < 1) snakeNewHead.row = Console.WindowHeight - 1;
 						if (snakeNewHead.row >= Console.WindowHeight) snakeNewHead.row = 1;
 						if (snakeNewHead.col >= Console.WindowWidth) snakeNewHead.col = 0;

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -187,7 +187,6 @@ namespace Snake
 					Console.Clear();
 					//adds background music to game
 					musicMedia();
-
 					//Initializing variables
 					bool superFood = false;
 					byte right = 0;
@@ -230,7 +229,8 @@ namespace Snake
 					{
 						Console.ForegroundColor = ConsoleColor.Cyan;
 						Console.SetCursorPosition(obstacle.col, obstacle.row);
-						Console.Write("=");
+						Console.OutputEncoding = System.Text.Encoding.UTF8;
+						Console.Write("░");
 					}
 
 					//creating the snake and putting the coordinates into queue
@@ -245,8 +245,8 @@ namespace Snake
 					Position food;
 					do
 					{
-						food = new Position(randomNumbersGenerator.Next(1, Console.WindowHeight),
-							randomNumbersGenerator.Next(0, Console.WindowWidth));
+						food = new Position(randomNumbersGenerator.Next(1, Console.WindowHeight-1),
+							randomNumbersGenerator.Next(0, Console.WindowWidth-1));
 					}
 					while (snakeElements.Contains(food) || obstacles.Contains(food));
 					Console.SetCursorPosition(food.col, food.row);
@@ -262,8 +262,8 @@ namespace Snake
 					{
 						do
 						{
-							posObject = new Position(randomNumbersGenerator.Next(1, Console.WindowHeight),
-								randomNumbersGenerator.Next(0, Console.WindowWidth));
+							posObject = new Position(randomNumbersGenerator.Next(1, Console.WindowHeight-1),
+								randomNumbersGenerator.Next(0, Console.WindowWidth-1));
 						}
 						while (snakeElements.Contains(posObject) || obstacles.Contains(posObject));
 						Console.SetCursorPosition(posObject.col, posObject.row);
@@ -305,7 +305,8 @@ namespace Snake
 									{
 										Console.ForegroundColor = ConsoleColor.Cyan;
 										Console.SetCursorPosition(obstacle.col, obstacle.row);
-										Console.Write("=");
+										Console.OutputEncoding = System.Text.Encoding.UTF8;
+										Console.Write("░");
 									}
 								}
 								if (pauseInput.Key == ConsoleKey.Enter)
@@ -336,8 +337,7 @@ namespace Snake
 						if (snakeNewHead.row < 1) snakeNewHead.row = Console.WindowHeight - 1;
 						if (snakeNewHead.row >= Console.WindowHeight) snakeNewHead.row = 1;
 						if (snakeNewHead.col >= Console.WindowWidth) snakeNewHead.col = 0;
-
-						//Displaying the score
+							//Displaying the score
 						int userPoints = (snakeElements.Count - 6) * 100 - negativePoints;
 						//if (userPoints < 0) userPoints = 0;
 						Console.SetCursorPosition(0, 0);
@@ -377,14 +377,18 @@ namespace Snake
 						if (direction == up) Console.Write("^");
 						if (direction == down) Console.Write("v");
 						//check snakehead overlapping food position
-						if (snakeNewHead.col == food.col && snakeNewHead.row == food.row)
+						if ((snakeNewHead.col == food.col && snakeNewHead.row == food.row)|| (snakeNewHead.col == food.col+1 && snakeNewHead.row == food.row))
 						{
-
+							Console.SetCursorPosition(food.col, food.row);
+							Console.Write(" ");
+							Console.SetCursorPosition(food.col+1, food.row);
+							Console.Write(" ");
 							//create new obstacle position object until no overlapping with snake and other obstacle
 							Position obstacle = new Position();
 							obstacle = createObject(obstacle, ConsoleColor.Cyan);
 							obstacles.Add(obstacle);
-							Console.Write("=");
+							Console.OutputEncoding = System.Text.Encoding.UTF8;
+							Console.Write("░");
 							// feeding the snake
 							//create new food position object until position is not overlapping snake or obstacle
 							food = createObject(food, ConsoleColor.Yellow);
@@ -420,6 +424,8 @@ namespace Snake
 							negativePoints = negativePoints + 50;
 							Console.SetCursorPosition(food.col, food.row);
 							Console.Write(" ");
+							Console.SetCursorPosition(food.col+1, food.row);
+							Console.Write(" ");
 							//create new food position until no overlapping with obstacle and snake
 							food = createObject(food, ConsoleColor.Yellow);
 							//refresh last food eat time timer counter 
@@ -437,7 +443,10 @@ namespace Snake
 						}
 						else
 						{
-							Console.Write("@");
+							Console.OutputEncoding = System.Text.Encoding.UTF8;
+
+							string a = "\u2764\u2764";
+							Console.WriteLine(a);
 						}
 						sleepTime -= 0.01;
 

@@ -22,3 +22,9 @@ C:\Users\USER\Desktop\SnakeGameTask6\bin\Debug\Snake.pdb
 C:\Users\USER\Desktop\SnakeGameTask6\obj\Debug\Snake.exe
 C:\Users\USER\Desktop\SnakeGameTask6\obj\Debug\Snake.pdb
 C:\Users\USER\Desktop\SnakeGameTask6\obj\Debug\Snake.csprojAssemblyReference.cache
+C:\Users\Emmanuel\Desktop\SnakeGameSprint2\bin\Debug\Snake.exe.config
+C:\Users\Emmanuel\Desktop\SnakeGameSprint2\bin\Debug\Snake.exe
+C:\Users\Emmanuel\Desktop\SnakeGameSprint2\bin\Debug\Snake.pdb
+C:\Users\Emmanuel\Desktop\SnakeGameSprint2\obj\Debug\Snake.csprojAssemblyReference.cache
+C:\Users\Emmanuel\Desktop\SnakeGameSprint2\obj\Debug\Snake.exe
+C:\Users\Emmanuel\Desktop\SnakeGameSprint2\obj\Debug\Snake.pdb

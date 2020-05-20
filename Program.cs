@@ -11,6 +11,7 @@ using System.Runtime.CompilerServices;
 
 namespace Snake
 {
+
 	//Structure Entity called Position
 	struct Position
 	{

@@ -296,6 +296,33 @@ namespace Snake
 							{
 								if (direction != up) direction = down;
 							}
+							
+							
+							//--------------------------disable output on display screeen besides arrow keys------------------------------
+							else
+							{
+
+								Console.Clear();
+								foreach (Position obstacle in obstacles)
+								{
+
+									Console.ForegroundColor = ConsoleColor.Cyan;
+									Console.SetCursorPosition(obstacle.col, obstacle.row);
+									Console.OutputEncoding = System.Text.Encoding.UTF8;
+									Console.Write("░");
+
+
+								}
+								foreach (Position position in snakeElements)
+								{
+									drawSnake(position);
+								}
+
+							}
+							
+							
+							
+							
 
 
 							if (userInput.Key == ConsoleKey.Spacebar && menu == false)

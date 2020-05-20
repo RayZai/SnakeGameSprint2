@@ -440,7 +440,7 @@ namespace Snake
 						Console.ForegroundColor = ConsoleColor.Yellow;
 						if (superFood == true)
 						{
-							Console.Write("$");
+							Console.Write("$$");
 						}
 						else
 						{

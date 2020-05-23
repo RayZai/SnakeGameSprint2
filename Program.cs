@@ -141,11 +141,17 @@ namespace Snake
 			string msg = "Score: " + userPoints;
 			Console.Write(msg);
 		}
+		public static void LevelDisplay(int levelNum)
+		{
+			Console.SetCursorPosition((Console.WindowWidth / 2) - 7, 0);
+			Console.WriteLine("Level:" + levelNum);
+		}
 		static void Main(string[] args)
 		{
 			bool restart = true;
 			bool menu = true;
 			bool gameStart = false;
+			int levelNum = 1;
 
 			if (menu)
 			{
@@ -378,6 +384,7 @@ namespace Snake
 						//game get harder when user reach certain point
 						if (userPoints > checkPoint)
 						{
+							levelNum += 1;
 							checkPoint += 300;
 							sleepTime -= 20;
 							foodDissapearTime -= 2000;
@@ -466,6 +473,8 @@ namespace Snake
 
 						//This will clear the previous score shown then display the new score
 						gameScore(userPoints);
+						//This will display the level that the player is at
+						LevelDisplay(levelNum);
 
 						Console.SetCursorPosition(food.col, food.row);
 						Console.ForegroundColor = ConsoleColor.Yellow;

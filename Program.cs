@@ -25,9 +25,64 @@ namespace Snake
 			this.col = col;
 		}
 	}
+	
+	
 
 	class Program
 	{
+		//creating the borders for the main menu of the game to enhance the appearance
+		public static int LocationX;
+		public static int LocationY;
+		public static int Width;
+		public static int Height;
+
+		private static ConsoleColor BorderColor;
+
+		public static void Draw()
+		{
+			
+			string a ="*";
+			string space = "";
+			string adjust = "";
+			for (int i = 0; i < Width; i++)
+			{
+				space += " ";
+				a += "*";
+			}
+
+			for (int j = 0; j < LocationX; j++)
+				adjust += " ";
+
+			a += "*" + "\n";
+
+			for (int i = 0; i < Height; i++)
+				a += adjust + "*" + space + "*" + "\n";
+
+			a += adjust + "*";
+			for (int i = 0; i < Width; i++)
+				a += "*";
+
+			a += "*" + "\n";
+
+			Console.ForegroundColor = BorderColor;
+			Console.CursorTop = LocationY;
+			Console.CursorLeft = LocationX;
+			Console.Write(a);
+			Console.ResetColor();
+		}
+
+
+		public static void ConsoleRectangle(int width, int height, int locationX, int locationY, ConsoleColor borderColor)
+		{
+			Width = width;
+			Height = height;
+			LocationX = locationX;
+			LocationY = locationY;
+			BorderColor = borderColor;
+		}
+
+		
+		
 		public static ConsoleKeyInfo mainMenu()
 		{
 			//Main menu for game

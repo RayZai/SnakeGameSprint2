@@ -530,7 +530,7 @@ namespace Snake
 						if (Environment.TickCount - lastFoodTime >= foodDissapearTime)
 						{
 							//decrease user score by 50 if user take too long to eat the food
-							//delete the food
+							//delete the food and superfood
 							superFood = false;
 							negativePoints = negativePoints + 50;
 							Console.SetCursorPosition(trapSuperFood.col, trapSuperFood.row);

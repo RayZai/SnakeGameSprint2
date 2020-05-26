@@ -207,7 +207,6 @@ namespace Snake
 			bool menu = true;
 			bool gameStart = false;
 			int levelNum = 1;
-
 			if (menu)
 			{
 				ConsoleKeyInfo userInput = mainMenu();

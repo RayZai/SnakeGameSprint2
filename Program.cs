@@ -38,7 +38,7 @@ namespace Snake
 		public static int Width;
 		public static int Height;
 
-		private static ConsoleColor BorderColor;
+		public static ConsoleColor BorderColor;
 
 		public static void Draw()
 		{

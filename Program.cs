@@ -309,14 +309,22 @@ namespace Snake
 					do
 					{
 						//the position is randomized from the second row to the the height of the console.
-						food = new Position(randomNumbersGenerator.Next(1, Console.WindowHeight),
-							randomNumbersGenerator.Next(0, Console.WindowWidth));
+						food = new Position(randomNumbersGenerator.Next(1, Console.WindowHeight-1),
+							randomNumbersGenerator.Next(0, Console.WindowWidth-1));
 					}
 					while (snakeElements.Contains(food) || obstacles.Contains(food));
 					Console.SetCursorPosition(food.col, food.row);
 					Console.ForegroundColor = ConsoleColor.Yellow;
 					Console.Write("@");
-
+					Position trapSuperFood;
+					do
+					{
+						//the position is randomized from the second row to the the height of the console.
+						trapSuperFood = new Position(randomNumbersGenerator.Next(1, Console.WindowHeight-1),
+							randomNumbersGenerator.Next(0, Console.WindowWidth-1));
+					}
+					while (snakeElements.Contains(food) || obstacles.Contains(food) || (food.col==trapSuperFood.col && food.row==trapSuperFood.row));
+					
 					//Displaying the snake
 					foreach (Position position in snakeElements)
 					{
@@ -329,7 +337,7 @@ namespace Snake
 							posObject = new Position(randomNumbersGenerator.Next(1, Console.WindowHeight-1),
 								randomNumbersGenerator.Next(0, Console.WindowWidth-1));
 						}
-						while (snakeElements.Contains(posObject) || obstacles.Contains(posObject));
+						while (snakeElements.Contains(posObject) || obstacles.Contains(posObject) || (food.col == trapSuperFood.col && food.row == trapSuperFood.row));
 						Console.SetCursorPosition(posObject.col, posObject.row);
 						Console.ForegroundColor = color;
 						return posObject;
@@ -470,9 +478,26 @@ namespace Snake
 						if (direction == left) Console.Write("<");//direction for snake moving left and so forth
 						if (direction == up) Console.Write("^");
 						if (direction == down) Console.Write("v");
-						//check snakehead overlapping food position
-						if ((snakeNewHead.col == food.col && snakeNewHead.row == food.row)|| (snakeNewHead.col == food.col+1 && snakeNewHead.row == food.row))
+						//check snakehead overlapping superfood position
+						if (snakeNewHead.col == trapSuperFood.col && snakeNewHead.row == trapSuperFood.row && superFood == true)
 						{
+							int randomNumber = randomNumbersGenerator.Next(0, 11);
+							//check is trap or superfood
+							if (randomNumber % 2 == 0)
+							{
+								negativePoints -= 200;
+							}
+							else
+							{
+								negativePoints += 200;
+							}
+							superFood = false;
+						}
+						//check snakehead overlapping food position
+						else if ((snakeNewHead.col == food.col && snakeNewHead.row == food.row)|| (snakeNewHead.col == food.col+1 && snakeNewHead.row == food.row))
+						{
+							Console.SetCursorPosition(trapSuperFood.col, trapSuperFood.row);
+							Console.Write(" ");
 							Console.SetCursorPosition(food.col, food.row);
 							Console.Write(" ");
 							Console.SetCursorPosition(food.col+1, food.row);
@@ -485,20 +510,12 @@ namespace Snake
 							Console.Write("░");
 							// feeding the snake
 							//create new food position object until position is not overlapping snake or obstacle
+							trapSuperFood = createObject(trapSuperFood, ConsoleColor.Yellow);
+							superFood = true;
 							food = createObject(food, ConsoleColor.Yellow);
-							//more point if super food
-							if (superFood == true)
-							{
-								negativePoints -= 200;
-								superFood = false;
-							}
 							//refresh last food eat time timer counter 
 							lastFoodTime = Environment.TickCount;
-							int randomNumber = randomNumbersGenerator.Next(0, 11);
-							if (randomNumber % 2 == 0)
-							{
-								superFood = true;
-							}
+							
 							sleepTime--;
 						}
 						else
@@ -516,10 +533,14 @@ namespace Snake
 							//delete the food
 							superFood = false;
 							negativePoints = negativePoints + 50;
+							Console.SetCursorPosition(trapSuperFood.col, trapSuperFood.row);
+							Console.Write(" ");
 							Console.SetCursorPosition(food.col, food.row);
 							Console.Write(" ");
 							Console.SetCursorPosition(food.col+1, food.row);
 							Console.Write(" ");
+							trapSuperFood = createObject(trapSuperFood, ConsoleColor.Yellow);
+							superFood = false ;
 							//create new food position until no overlapping with obstacle and snake
 							food = createObject(food, ConsoleColor.Yellow);
 							//refresh last food eat time timer counter 
@@ -530,20 +551,19 @@ namespace Snake
 						gameScore(userPoints);
 						//This will display the level that the player is at
 						LevelDisplay(levelNum);
-
-						Console.SetCursorPosition(food.col, food.row);
-						Console.ForegroundColor = ConsoleColor.Yellow;
 						if (superFood == true)
 						{
-							Console.Write("$$");
+							Console.SetCursorPosition(trapSuperFood.col, trapSuperFood.row);
+							Console.Write("$");
 						}
-						else
-						{
-							Console.OutputEncoding = System.Text.Encoding.UTF8;
+						Console.SetCursorPosition(food.col, food.row);
+						Console.ForegroundColor = ConsoleColor.Yellow;
+						
+						Console.OutputEncoding = System.Text.Encoding.UTF8;
 
-							string a = "\u2764\u2764";
-							Console.WriteLine(a);
-						}
+						string a = "\u2764\u2764";
+						Console.Write(a);
+						
 						sleepTime -= 0.01;
 
 						Thread.Sleep((int)sleepTime);

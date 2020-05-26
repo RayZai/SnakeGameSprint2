@@ -86,7 +86,8 @@ namespace Snake
 		public static ConsoleKeyInfo mainMenu()
 		{
 			//Main menu for game
-			//Main menu for game
+			ConsoleRectangle(60, 13, 29, 4, ConsoleColor.Red);
+			Draw();
 			Console.ForegroundColor = ConsoleColor.Red;
 			string gamename = "********** SNAKE GAME **********";
 			Console.SetCursorPosition((Console.WindowWidth - gamename.Length) / 2, (Console.WindowHeight / 2) - 6);
